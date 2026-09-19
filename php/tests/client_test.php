@@ -75,7 +75,7 @@ $s = fresh(null, sign_token(claims(), $sk, $b64u, 'unknown-kid'))->state();
 check('an unknown kid is invalid', $s['status'] === 'invalid');
 
 $s = fresh(null, '{"status":"active","valid":true}')->state();
-check('v1-style plain JSON state is invalid (the forged runtime-state.json bypass)', $s['status'] === 'invalid' && !$s['licensed']);
+check('old-style plain JSON state is invalid (the forged runtime-state.json bypass)', $s['status'] === 'invalid' && !$s['licensed']);
 
 $s = fresh(claims(['aud' => 'social-proof-premium']))->state();
 check("another product's licence does not unlock this one", $s['status'] === 'invalid');

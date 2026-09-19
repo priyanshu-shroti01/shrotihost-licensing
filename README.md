@@ -9,7 +9,7 @@ Live at **https://licensing.shrotihost.in** (Vercel, Neon Postgres).
 
 ## Why it exists
 
-The v1 server returned unsigned JSON, and modules cached it under a key derived from
+The old licence server returned unsigned JSON, and modules cached it under a key derived from
 the customer's own `configuration.php`. A customer could forge the cache, or point
 the licence hostname at localhost and answer `{"valid":true}`, without editing any
 PHP. Modules now hold only our public key: they can check a token and cannot make one.

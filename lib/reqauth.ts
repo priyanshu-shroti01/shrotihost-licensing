@@ -7,7 +7,7 @@
  *
  *   canonical = ts \n nonce \n METHOD \n path?query \n sha256hex(body)
  *
- * v1's admin HMAC covered ts|method|path|body but had no nonce, so a captured
+ * The old server's admin HMAC covered ts|method|path|body but had no nonce, so a captured
  * request could be replayed for five minutes. Method and path are in the
  * canonical string so a signature for one endpoint is useless on another.
  *

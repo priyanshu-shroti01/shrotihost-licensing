@@ -1,7 +1,7 @@
 /**
  * Entitlement tokens: what an install is allowed to do, signed.
  *
- * Timing (licensing-server-v2.md §3): a token lives 7 days, and an install
+ * Timing: a token lives 7 days, and an install
  * that cannot reach us keeps working for a further 14 (grace_until). Installs
  * heartbeat daily, so a suspension reaches a connected install within a day,
  * while a Vercel or network outage has three weeks before anyone notices.

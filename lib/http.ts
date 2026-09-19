@@ -1,7 +1,7 @@
 /**
  * Response and request helpers shared by every route.
  *
- * Error shape, from the v2 API design:
+ * Error shape:
  *   { "error": { "code", "message", "retryable", "retry_after"? } }
  * `retryable` is what a module keys on: a retryable failure is never a licence
  * decision, so the install keeps its current state and tries again later.

@@ -88,7 +88,7 @@ test("an entitlement verifies with the published public key and carries the bind
   assert.ok(v.payload.grace_until > v.payload.exp, "active tokens get offline grace");
 });
 
-test("a token with one changed byte is rejected (v1's forged-cache bypass)", async () => {
+test("a token with one changed byte is rejected (the old forged-cache bypass)", async () => {
   const { key } = await newLicense();
   const a = await activated(key);
   const [h, p, s] = a.entitlement.split(".");
@@ -160,7 +160,7 @@ test("a blacklisted domain cannot activate", async () => {
   await assert.rejects(activated(key), (e: any) => e.code === "blacklisted");
 });
 
-test("an adopted v1 key keeps working and its plaintext is never stored", async () => {
+test("an adopted existing key keeps working and its plaintext is never stored", async () => {
   const r = await admin.createLicense({ product_slug: "shrotihost-whatsapp-manager-whmcs", whmcs_service_id: 1, license_key: "SHROTI-WM-ABCDE-FGHJK" });
   assert.equal(r.license_key, null);
   const row = await one("SELECT * FROM licenses WHERE id = $1", [r.license.id]);
@@ -347,7 +347,7 @@ test("the admin API rejects an unsigned request", async () => {
   assert.equal(res.status, 401);
 });
 
-test("the admin API rejects a replayed request (v1 had no nonce)", async () => {
+test("the admin API rejects a replayed request (the old server had no nonce)", async () => {
   const n = nonce();
   const body = { product_slug: "shrotihost-whatsapp-manager-whmcs", whmcs_service_id: 9 };
   assert.equal((await adminPOST(adminReq("POST", "/api/admin/licenses", body, { nonce: n }), ctxFor("/api/admin/licenses"))).status, 201);

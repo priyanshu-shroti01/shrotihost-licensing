@@ -107,8 +107,8 @@ class LicenseService
     /* ─────────────────────────── provisioning ─────────────────────────── */
 
     /**
-     * Make sure this service has a licence on the v2 server.
-     * A key WHMCS already holds (from v1) is adopted, never replaced, so no
+     * Make sure this service has a licence on the licensing server.
+     * A key WHMCS already holds (from the old server) is adopted, never replaced, so no
      * customer's key changes in the migration.
      *
      * @return array{created: bool, adopted: bool, key: ?string, license: array}
@@ -121,7 +121,7 @@ class LicenseService
             throw new \RuntimeException('Set the Product Slug in this product\'s Module Settings.');
         }
         $map = Store::map($sid);
-        if ($map && ($map['license_server'] ?? '') === 'v2' && !empty($map['remote_license_id'])) {
+        if ($map && ($map['license_server'] ?? '') === 'synced' && !empty($map['remote_license_id'])) {
             return ['created' => false, 'adopted' => false, 'key' => $map['raw_license_key'], 'license' => self::fetch($p, true)];
         }
         $existingKey = trim((string) ($map['raw_license_key'] ?? ''));
@@ -164,13 +164,13 @@ class LicenseService
             'raw_license_key' => $key,
             'key_hint' => (string) ($license['key_hint'] ?? ''),
             'product_slug' => $slug,
-            'license_server' => 'v2',
+            'license_server' => 'synced',
             'used_key_prefix' => (string) strtok((string) ($license['key_hint'] ?? ''), '…'),
         ]);
         self::writeKeyToService($sid, $key);
         self::applySnapshot($sid, $p, $license);
         $created = !empty($res['created']) && $existingKey === '';
-        Store::audit($created ? 'license_created' : 'license_adopted', 'success', ($created ? 'Licence created' : 'Existing key registered') . ' on the v2 licensing server (#' . $license['id'] . ').', ['service_id' => $sid, 'client_id' => (int) $p['userid']]);
+        Store::audit($created ? 'license_created' : 'license_adopted', 'success', ($created ? 'Licence created' : 'Existing key registered') . ' on the licensing server (#' . $license['id'] . ').', ['service_id' => $sid, 'client_id' => (int) $p['userid']]);
         return ['created' => $created, 'adopted' => $existingKey !== '', 'key' => $key, 'license' => $license];
     }
 
@@ -191,10 +191,10 @@ class LicenseService
     {
         $sid = (int) $p['serviceid'];
         $map = Store::map($sid);
-        if (!$map || ($map['license_server'] ?? '') !== 'v2' || empty($map['remote_license_id'])) {
+        if (!$map || ($map['license_server'] ?? '') !== 'synced' || empty($map['remote_license_id'])) {
             $status = strtolower((string) $p['status']);
             $hasKey = $map && trim((string) ($map['raw_license_key'] ?? '')) !== '';
-            // Adopt existing v1 keys always; only create brand-new licences when allowed.
+            // Adopt existing keys always; only create brand-new licences when allowed.
             if (!$hasKey && (!$allowCreate || !in_array($status, ['active', 'suspended'], true))) {
                 return [];
             }
@@ -238,7 +238,7 @@ class LicenseService
     {
         $sid = (int) $p['serviceid'];
         $map = Store::map($sid);
-        if (!$map || empty($map['remote_license_id']) || ($map['license_server'] ?? '') !== 'v2') {
+        if (!$map || empty($map['remote_license_id']) || ($map['license_server'] ?? '') !== 'synced') {
             throw new \RuntimeException('No licence has been created for this service yet.');
         }
         if (!$force && !empty($map['last_successful_sync_at']) && time() - strtotime((string) $map['last_successful_sync_at']) < self::SYNC_TTL) {

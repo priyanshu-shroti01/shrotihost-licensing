@@ -5,11 +5,12 @@ namespace ShrotiHost\WHMCS\Licensing;
 use WHMCS\Database\Capsule;
 
 /**
- * WHMCS-side storage. The three v1 tables are kept (21 live mappings, the
- * audit trail, the paid-reissue queue); v2 adds two columns to the map:
+ * WHMCS-side storage. The three original tables are kept (21 live mappings,
+ * the audit trail, the paid-reissue queue), plus two columns on the map:
  *
- *   license_server  'v2' once the service's licence exists on the v2 server.
- *                   A v1 remote_license_id means nothing to v2, so a row
+ *   license_server  'synced' once the service's licence exists on the
+ *                   licensing server. An old remote_license_id means nothing
+ *                   to it, so a row
  *                   without it is adopted (its key registered) on next sync.
  *   key_hint        "SHROTI-WM-…-7K2Q", for screens that should not show the key.
  */

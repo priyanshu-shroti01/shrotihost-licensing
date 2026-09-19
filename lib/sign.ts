@@ -1,7 +1,7 @@
 /**
  * Ed25519 signing of entitlements and release manifests, as compact JWS.
  *
- * This is the fix for the v1 licensing bypass. v1 responses were unsigned JSON
+ * This is the fix for the old licensing bypass. Old responses were unsigned JSON
  * and its "local key" was symmetric, so an install could forge its own cache or
  * point license.shrotihost.in at localhost and answer {"valid":true}. A module
  * now holds only our *public* key: it can check a token, and cannot make one.

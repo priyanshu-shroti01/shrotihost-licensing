@@ -1,6 +1,6 @@
 <?php
 /**
- * ShrotiHost Licensing — WHMCS admin addon (v2).
+ * ShrotiHost Licensing — WHMCS admin addon.
  *
  * Holds the licensing server credentials, and is where releases are published
  * and licences are overseen: overview, every managed service, releases (upload
@@ -163,7 +163,7 @@ function shrotihost_license_admin_post(string $do): string
                         $fail[] = '#' . $sid . ': ' . (Store::map($sid)['last_error_message'] ?? 'failed');
                     }
                 }
-                return ($fail ? $bad('Failed: ' . implode(' · ', $fail)) : '') . $ok("Migrated or reconciled $ok_ service(s).");
+                return ($fail ? $bad('Failed: ' . implode(' · ', $fail)) : '') . $ok("Registered or reconciled $ok_ service(s).");
             case 'reconcile':
                 $sid = (int) ($_POST['service_id'] ?? 0);
                 return shrotihost_license_reconcile_service($sid, ['trigger' => 'admin_addon', 'allow_create' => true])
@@ -223,7 +223,7 @@ function shrotihost_license_admin_overview(): void
         echo '<tr><td>' . $h($slug) . '</td><td>' . (int) ($s['active'] ?? 0) . '</td><td>' . (int) ($s['suspended'] ?? 0) . '</td><td>' . (int) ($s['terminated'] ?? 0) . '</td><td>' . $h($latest[$slug] ?? '—') . '</td></tr>';
     }
     if (!$by) {
-        echo '<tr><td colspan="5"><em>No licences on the server yet. Use Services → Migrate v1 licences.</em></td></tr>';
+        echo '<tr><td colspan="5"><em>No licences on the server yet. Use Services → Register existing licences.</em></td></tr>';
     }
     echo '</table></div>';
 }
@@ -240,16 +240,16 @@ function shrotihost_license_admin_services(string $link, string $token): void
         ->get();
     $pendingMigration = 0;
     foreach ($rows as $r) {
-        if (($r->license_server ?? '') !== 'v2' && trim((string) $r->raw_license_key) !== '') {
+        if (($r->license_server ?? '') !== 'synced' && trim((string) $r->raw_license_key) !== '') {
             $pendingMigration++;
         }
     }
     echo '<div class="shla-card"><form method="post" style="display:inline">' . $token . '<input type="hidden" name="do" value="sync_products"><button class="btn btn-default">Sync products to server</button></form> ';
-    echo '<form method="post" style="display:inline" onsubmit="return confirm(\'Register every v1 licence key on the v2 server and reconcile status, dates and seats with WHMCS?\')">' . $token . '<input type="hidden" name="do" value="migrate_all"><button class="btn btn-primary">Migrate v1 licences (' . $pendingMigration . ' pending) &amp; reconcile all</button></form></div>';
+    echo '<form method="post" style="display:inline" onsubmit="return confirm(\'Register every existing licence key on the licensing server and reconcile status, dates and seats with WHMCS?\')">' . $token . '<input type="hidden" name="do" value="migrate_all"><button class="btn btn-primary">Register existing licences (' . $pendingMigration . ' pending) &amp; reconcile all</button></form></div>';
     echo '<div class="shla-card"><table class="table table-condensed"><tr><th>Service</th><th>Client</th><th>Product</th><th>WHMCS</th><th>Licence</th><th>Key</th><th>Installs</th><th>Last sync</th><th></th></tr>';
     foreach ($rows as $r) {
         $client = trim($r->firstname . ' ' . $r->lastname) ?: $r->companyname;
-        $lic = ($r->license_server ?? '') === 'v2' ? $h($r->remote_status) : (trim((string) $r->raw_license_key) !== '' ? '<em>v1 — not migrated</em>' : '<em>none</em>');
+        $lic = ($r->license_server ?? '') === 'synced' ? $h($r->remote_status) : (trim((string) $r->raw_license_key) !== '' ? '<em>not registered yet</em>' : '<em>none</em>');
         $health = $r->sync_health === 'error' ? ' <span class="shla-bad" title="' . $h($r->last_error_message) . '">⚠</span>' : '';
         echo '<tr><td><a href="clientsservices.php?userid=' . (int) $r->userid . '&id=' . (int) $r->id . '">#' . (int) $r->id . '</a></td><td>' . $h($client) . '</td><td>' . $h($r->name) . '</td><td>' . $h($r->domainstatus) . '</td><td>' . $lic . $health . '</td><td class="shla-mono">' . $h($r->key_hint ?: '—') . '</td><td>' . (int) $r->activation_count . '</td><td>' . $h($r->last_successful_sync_at ?: '—') . '</td>';
         echo '<td><form method="post" style="margin:0">' . $token . '<input type="hidden" name="do" value="reconcile"><input type="hidden" name="service_id" value="' . (int) $r->id . '"><button class="btn btn-xs btn-default">Reconcile</button></form></td></tr>';

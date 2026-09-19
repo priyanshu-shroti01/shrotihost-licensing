@@ -19,7 +19,7 @@ export function generateLicenseKey(prefix: string): string {
   return `${p}-${groups.join("-")}`;
 }
 
-/** Same normalisation as the v1 server, so v1 hashes remain valid. */
+/** Same normalisation as the old licence server, so existing hashes remain valid. */
 export function keyHash(key: string): string {
   return sha256hex(key.trim().toLowerCase());
 }

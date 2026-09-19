@@ -1,4 +1,4 @@
-{* ShrotiHost Licensing v2 — client service page (replaces the Overview tab). *}
+{* ShrotiHost Licensing — client service page (replaces the Overview tab). *}
 {literal}<style>
 .shl{--shl-bg:var(--body-bg,#fff);--shl-soft:var(--gray-faded,#f8f7fb);--shl-border:var(--gray-lighter-3,#e4e0ec);--shl-head:var(--text-heading-color,#1b1523);--shl-text:var(--text-body-color,#4a4356);--shl-muted:var(--text-lighter-color,#7c7489);--shl-brand:#a810c7;--shl-brand-ink:#8a0da3;max-width:980px}
 .lagom-dark-mode .shl{--shl-brand-ink:#d77be9}
@@ -163,7 +163,7 @@
 
       <div class="shl-row">
         {if $shl.release && $shl.status == 'active'}
-        <a class="shl-btn primary" href="{$shl.download_url}" {if !$shl.updates_valid && !$shl.release.is_security}aria-disabled="true"{/if}>Download v{$shl.release.version|escape}</a>
+        <a class="shl-btn primary" href="{$shl.download_url}" {if !$shl.updates_valid && !$shl.release.is_security}aria-disabled="true"{/if}>Download version {$shl.release.version|escape}</a>
         {/if}
         {if $shl.can_reissue}
         <a class="shl-btn" href="{$shl.reissue_url}" onclick="return confirm('Reissue this licence? Every installation using it will need to activate again. Use this to move the module to a new domain or folder.');">Reissue (move installation)</a>
@@ -205,7 +205,7 @@
   <section class="shl-card" aria-labelledby="shl-release">
     <div class="shl-body">
       <div class="shl-release">
-        <div><span class="shl-label" id="shl-release">Latest version</span><strong>v{$shl.release.version|escape}</strong>{if $shl.release.is_security}<span class="shl-security">Security release</span>{/if}</div>
+        <div><span class="shl-label" id="shl-release">Latest version</span><strong>{$shl.release.version|escape}</strong>{if $shl.release.is_security}<span class="shl-security">Security release</span>{/if}</div>
         <span class="shl-note" style="margin:0">Released {$shl.release.released_at|date_format:"%e %b %Y"} · SHA-256 <code title="{$shl.release.package_sha256|escape}">{$shl.release.package_sha256|truncate:16:"…"|escape}</code></span>
       </div>
       {if $shl.release.changelog}<div class="shl-changelog">{$shl.release.changelog|escape}</div>{/if}

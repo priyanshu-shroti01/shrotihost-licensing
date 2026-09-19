@@ -35,12 +35,14 @@ export function seal(plaintext: string): string {
   const iv = randomBytes(12);
   const c = createCipheriv("aes-256-gcm", serverKey(), iv);
   const body = Buffer.concat([c.update(plaintext, "utf8"), c.final()]);
-  return ["v1", b64url(iv), b64url(c.getAuthTag()), b64url(body)].join(".");
+  return ["sealed", b64url(iv), b64url(c.getAuthTag()), b64url(body)].join(".");
 }
 
 export function unseal(sealed: string): string {
-  const [v, iv, tag, body] = sealed.split(".");
-  if (v !== "v1" || !iv || !tag || !body) throw new Error("bad sealed value");
+  // Four dot-separated parts: label, iv, tag, body. The label is not checked,
+  // so values sealed before it was renamed still open.
+  const [, iv, tag, body] = sealed.split(".");
+  if (sealed.split(".").length !== 4 || !iv || !tag || !body) throw new Error("bad sealed value");
   const d = createDecipheriv("aes-256-gcm", serverKey(), Buffer.from(iv, "base64url"));
   d.setAuthTag(Buffer.from(tag, "base64url"));
   return Buffer.concat([d.update(Buffer.from(body, "base64url")), d.final()]).toString("utf8");

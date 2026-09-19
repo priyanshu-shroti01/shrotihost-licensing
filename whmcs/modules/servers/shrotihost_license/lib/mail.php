@@ -2,7 +2,7 @@
 /**
  * Licensing email templates and delivery.
  *
- * Carried over from the v1 module unchanged in behaviour: the four
+ * Carried over from the previous module unchanged in behaviour: the four
  * "ShrotiHost License *" templates (ids 119/121/122/123 on the portal) are
  * kept in sync from these definitions, WHMCS's generic welcome/suspension
  * emails are swapped for them on managed services, and the shl_* merge fields

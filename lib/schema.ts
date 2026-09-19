@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS products (
 
 -- ── Licences ────────────────────────────────────────────────────────────────
 -- The plaintext key is never stored. key_hash = sha256(lower(trim(key))), the
--- same normalisation the v1 server used, so v1 hashes carry over unchanged.
+-- same normalisation the old licence server used, so existing hashes carry over.
 -- WHMCS holds the plaintext for the customer; this server only recognises it.
 CREATE TABLE IF NOT EXISTS licenses (
   id                        INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,

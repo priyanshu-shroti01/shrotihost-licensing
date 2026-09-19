@@ -20,7 +20,7 @@
  *  - A clock rolled backwards cannot extend a licence: time is max(now, the
  *    latest time this install has already observed).
  *  - Binding uses WHMCS's SystemURL and ROOTDIR, which are identical in web
- *    requests and in cron. (v1 used HTTP_HOST / SERVER_ADDR, which differ between
+ *    requests and in cron. (The old client used HTTP_HOST / SERVER_ADDR, which differ between
  *    the two, so web and cron kept invalidating each other's cache.)
  */
 

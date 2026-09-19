@@ -6,8 +6,9 @@ namespace ShrotiHost\WHMCS\Licensing;
  * Admin API client for the ShrotiHost Licensing Server.
  *
  * Every request is signed: timestamp + single-use nonce + method + path +
- * body hash, HMAC-SHA256 with the admin secret. v1 signed no nonce, so a
- * captured request could be replayed for five minutes; v2 refuses a replay.
+ * body hash, HMAC-SHA256 with the admin secret. The old server signed no
+ * nonce, so a captured request could be replayed for five minutes; this
+ * server refuses a replay.
  */
 class AdminClient
 {

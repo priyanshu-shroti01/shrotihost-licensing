@@ -4,7 +4,7 @@
  *
  * Products with "Include WhatsApp API Addon" get the addon attached
  * automatically, and its lifecycle follows the licence service's: suspend,
- * unsuspend, terminate. Carried over from the v1 module unchanged in
+ * unsuspend, terminate. Carried over from the previous module unchanged in
  * behaviour — this is WHMCS plumbing, not licensing, and it works.
  */
 

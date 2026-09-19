@@ -7,7 +7,7 @@ use WHMCS\Database\Capsule;
 /**
  * Configuration: addon-wide settings and per-product module options.
  *
- * Product options keep their v1 POSITIONS (configoption1..20). WHMCS stores
+ * Product options keep their original POSITIONS (configoption1..20). WHMCS stores
  * them by position, so the six live products keep every value they already
  * have — only the descriptions change.
  */

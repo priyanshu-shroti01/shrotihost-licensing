@@ -7,7 +7,7 @@ namespace ShrotiHost\WHMCS\Licensing;
  *
  * WHMCS is the authority: a recurring licence has NO subscription expiry on
  * the licensing server — WHMCS suspends and terminates it when an invoice goes
- * unpaid. (v1 set expiry = next due date, so a licence died the day an invoice
+ * unpaid. (The old module set expiry = next due date, so a licence died the day an invoice
  * fell due, before WHMCS's own overdue grace had even started.) Support and
  * updates do follow the paid-up date.
  */

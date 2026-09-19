@@ -1,6 +1,6 @@
 <?php
 /**
- * ShrotiHost Licensing — WHMCS provisioning module (v2).
+ * ShrotiHost Licensing — WHMCS provisioning module.
  *
  * Provisions and manages licences for ShrotiHost's own WHMCS modules on the
  * ShrotiHost Licensing Server (https://licensing.shrotihost.in). WHMCS is the
@@ -273,7 +273,7 @@ function shrotihost_license_AdminServicesTabFields(array $params): array
     $map = Store::map($sid);
     $lic = null;
     $error = '';
-    if ($map && ($map['license_server'] ?? '') === 'v2') {
+    if ($map && ($map['license_server'] ?? '') === 'synced') {
         try {
             $lic = LicenseService::fetch($p);
         } catch (\Throwable $e) {
@@ -287,7 +287,7 @@ function shrotihost_license_AdminServicesTabFields(array $params): array
         return $v ? date('j M Y', strtotime((string) $v)) : 'Never (lifetime)';
     };
     if (!$lic) {
-        $state = !$map ? 'No licence yet. Use <b>Create</b> or <b>Sync with Server</b>.' : (($map['license_server'] ?? '') !== 'v2' ? 'v1 licence — click <b>Sync with Server</b> to register its key on the v2 server.' : 'Could not load: ' . $h($error));
+        $state = !$map ? 'No licence yet. Use <b>Create</b> or <b>Sync with Server</b>.' : (($map['license_server'] ?? '') !== 'synced' ? 'Not registered yet — click <b>Sync with Server</b> to register its key on the licensing server.' : 'Could not load: ' . $h($error));
         return ['Licence' => '<div class="alert alert-info" style="margin:0">' . $state . '</div>'];
     }
     $badge = ['active' => 'success', 'suspended' => 'warning', 'terminated' => 'danger', 'expired' => 'danger'][$lic['effective_status']] ?? 'default';
@@ -322,7 +322,7 @@ function shrotihost_license_ClientArea(array $params): array
     $sid = (int) $p['serviceid'];
     $map = Store::map($sid) ?: [];
     $lic = null;
-    if (($map['license_server'] ?? '') === 'v2') {
+    if (($map['license_server'] ?? '') === 'synced') {
         try {
             $lic = LicenseService::fetch($p, false);
         } catch (\Throwable $e) {
