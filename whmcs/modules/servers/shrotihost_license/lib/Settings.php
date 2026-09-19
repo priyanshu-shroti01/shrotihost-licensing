@@ -57,11 +57,13 @@ class Settings
             $rows = [];
         }
         $secret = (string) ($rows['ApiSecret'] ?? '');
+        // Saving the addon form stores "password" fields encrypted; a value
+        // written directly is plain. Accept the decryption only if it looks
+        // like a secret (decrypting plain text yields binary noise).
         if ($secret !== '' && function_exists('decrypt')) {
-            // WHMCS stores "password" addon fields encrypted.
             try {
                 $plain = decrypt($secret);
-                if (is_string($plain) && $plain !== '') {
+                if (is_string($plain) && preg_match('/^[A-Za-z0-9_\-+\/=]{24,200}$/', $plain)) {
                     $secret = $plain;
                 }
             } catch (\Throwable $e) {

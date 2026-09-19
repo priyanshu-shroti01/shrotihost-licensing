@@ -147,6 +147,28 @@ class ShrotiLicensing
         return ['ok' => !empty($s['licensed']), 'message' => $s['message'], 'state' => $s];
     }
 
+    /**
+     * Activate if the stored activation is not for this key. Retrying the
+     * SAME key is throttled to every 15 minutes so a wrong key cannot turn
+     * every page view into a server call; a newly entered key goes at once.
+     *
+     * @return array|null the activate() result, or null when nothing was attempted
+     */
+    public function ensureActivated($licenseKey, $force = false)
+    {
+        if ($this->activatedFor($licenseKey)) {
+            return null;
+        }
+        $h = hash('sha256', strtolower(trim((string) $licenseKey)));
+        $last = (int) $this->get('activate_attempt');
+        if (!$force && $this->get('activate_attempt_key') === $h && $last > 0 && time() - $last < 900) {
+            return null;
+        }
+        $this->put('activate_attempt', (string) time());
+        $this->put('activate_attempt_key', $h);
+        return $this->activate($licenseKey);
+    }
+
     /** Whether the stored activation belongs to this key (so a changed key re-activates). */
     public function activatedFor($licenseKey)
     {
