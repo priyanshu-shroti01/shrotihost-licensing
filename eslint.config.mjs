@@ -12,5 +12,5 @@ export default defineConfig([
       "@typescript-eslint/no-explicit-any": "off",
     },
   },
-  globalIgnores([".next/**", "out/**", "next-env.d.ts", "php/**"]),
+  globalIgnores([".next/**", "out/**", "next-env.d.ts", "php/**", "design/**"]),
 ]);
