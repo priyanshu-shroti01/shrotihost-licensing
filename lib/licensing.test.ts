@@ -266,6 +266,7 @@ test("a terminated licence cannot be unsuspended back to life", async () => {
   const { id } = await newLicense();
   await admin.setStatus(id, "terminated", "");
   await assert.rejects(admin.setStatus(id, "active", ""), (e: any) => e.code === "license_terminated");
+  assert.equal((await admin.setStatus(id, "active", "re-activated in WHMCS", true)).status, "active");
 });
 
 /* ─────────────────────────────── releases ─────────────────────────────── */

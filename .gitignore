@@ -9,3 +9,6 @@ next-env.d.ts
 /secrets/
 /import/
 .env*
+.agents/
+.claude/
+skills-lock.json

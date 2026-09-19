@@ -53,8 +53,8 @@ async function route(req: Request, ctx: Ctx): Promise<Response> {
       const lid = id(b);
       const reason = str(body, "reason", { max: 300 });
       switch (c) {
-        case "suspend": return json({ license: await admin.setStatus(lid, "suspended", reason) });
-        case "unsuspend": return json({ license: await admin.setStatus(lid, "active", reason) });
+        case "suspend": return json({ license: await admin.setStatus(lid, "suspended", reason, body.force === true) });
+        case "unsuspend": return json({ license: await admin.setStatus(lid, "active", reason, body.force === true) });
         case "terminate": return json({ license: await admin.setStatus(lid, "terminated", reason) });
         case "update": return json({ license: await admin.updateLicense(lid, body) });
         case "reissue": return json(await admin.reissueLicense(lid, body.count === true));

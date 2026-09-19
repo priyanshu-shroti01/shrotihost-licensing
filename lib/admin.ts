@@ -178,10 +178,15 @@ export async function lookupLicense(b: Record<string, unknown>) {
   return licenseView(lic);
 }
 
-export async function setStatus(id: number, status: "active" | "suspended" | "terminated", reason: string) {
+/**
+ * `force` lets WHMCS bring a terminated licence back when an admin re-activates
+ * the service there; without it a terminated licence stays terminated, so a
+ * stray unsuspend can never resurrect one.
+ */
+export async function setStatus(id: number, status: "active" | "suspended" | "terminated", reason: string, force = false) {
   const lic = await licenseOr404(id);
-  if (lic.status === "terminated" && status !== "terminated") {
-    throw new ApiError(409, "license_terminated", "A terminated licence cannot be reactivated. Create a new one.");
+  if (lic.status === "terminated" && status !== "terminated" && !force) {
+    throw new ApiError(409, "license_terminated", "A terminated licence cannot be reactivated without force.");
   }
   const row = (await q(
     "UPDATE licenses SET status = $2, status_reason = $3, updated_at = now() WHERE id = $1 RETURNING *",
