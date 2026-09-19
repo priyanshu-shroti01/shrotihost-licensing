@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark light">
+<title>ShrotiHost Licensing Console</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2307090C'/%3E%3Cpath d='M16 5l9 4v7c0 5.2-3.8 9.6-9 11-5.2-1.4-9-5.8-9-11V9z' fill='none' stroke='%2338BDF8' stroke-width='2'/%3E%3Cpath d='M12 16l3 3 5-6' fill='none' stroke='%2334D399' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<script>
+  /* Apply the stored theme and motion preference before first paint (no flash). */
+  (function () {
+    var t = "dark", m = "system";
+    try { t = localStorage.getItem("shl.theme") || "dark"; m = localStorage.getItem("shl.motion") || "system"; } catch (e) {}
+    var q = new URLSearchParams(location.search);
+    if (q.get("theme")) t = q.get("theme");
+    var r = document.documentElement;
+    if (t === "system") r.removeAttribute("data-theme"); else r.setAttribute("data-theme", t === "light" ? "light" : "dark");
+    if (m === "reduce" || (m === "system" && matchMedia("(prefers-reduced-motion: reduce)").matches)) r.setAttribute("data-motion", "reduce");
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap">
+<style>
+{{CSS}}
+.mobile-brand { display: none; }
+:root { --logo-l: url("{{LOGO_LIGHT}}"); --logo-d: url("{{LOGO_DARK}}"); --logo: var(--logo-l); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --logo: var(--logo-d); } }
+:root[data-theme="dark"] { --logo: var(--logo-d); }
+.logo { display: block; aspect-ratio: 5 / 1; background: var(--logo) left center / contain no-repeat; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="backdrop" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-overview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></symbol>
+    <symbol id="i-install" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/></symbol>
+    <symbol id="i-sig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-licence" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></symbol>
+    <symbol id="i-release" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5L22 20H2z"/><path d="M12 10v4M12 17h.01"/></symbol>
+    <symbol id="i-bad" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8l5 5v8l-5 5H8l-5-5V8z"/><path d="M9.5 9.5l5 5M14.5 9.5l-5 5"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+    <symbol id="i-idle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h4v16h-4M10 16l4-4-4-4M14 12H4"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 012-2h8"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-5 4 10 2-5h6"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+    <symbol id="i-kbd" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></symbol>
+  </defs>
+</svg>
+
+<!-- Sign-in (route #/login) -->
+<section class="login" id="login" hidden aria-labelledby="login-title">
+  <div class="login-vis">
+    <div>
+      <span class="logo" role="img" aria-label="ShrotiHost" style="height:28px"></span>
+    </div>
+    <div class="login-mark">
+      <span class="eyebrow accent">Licensing control plane</span>
+      <h1 id="login-title">Secure access to ShrotiHost licensing.</h1>
+      <p>Every entitlement this console issues is signed with Ed25519 and verified by the module on the customer's server.</p>
+      <div class="orbit-mini" data-core="idle" aria-hidden="true" style="width:180px">
+        <div class="orbit"><div class="ring r1"><span class="sat"></span></div><div class="ring r2"><span class="sat"></span></div><div class="ring r3"></div><div class="orbit-core"><svg class="i"><use href="#i-sig"/></svg></div></div>
+      </div>
+    </div>
+    <p class="mono muted" style="font-size:11.5px">licensing.shrotihost.in · region fra1</p>
+  </div>
+  <div class="login-form-wrap">
+    <form class="login-card hud" id="login-form" novalidate>
+      <div><span class="eyebrow">ShrotiHost · Licensing</span><h2 style="margin-top:8px">Secure access</h2></div>
+      <div class="fld"><label for="lg-email">Email</label><input id="lg-email" type="email" autocomplete="username" required><span class="err" id="lg-email-err" hidden></span></div>
+      <div class="fld"><label for="lg-pass">Password</label><input id="lg-pass" type="password" autocomplete="current-password" required><span class="err" id="lg-pass-err" hidden></span></div>
+      <p class="form-err" id="lg-err" role="alert" hidden></p>
+      <button class="btn primary" type="submit" id="lg-submit"><svg class="i"><use href="#i-lock"/></svg>Sign in</button>
+      <div class="boot" id="boot" hidden aria-live="polite"></div>
+      <div class="login-status"><span>System status <span class="status s-ok" id="lg-status"><svg class="i"><use href="#i-ok"/></svg>Operational</span></span><span>Sessions last 12 h</span></div>
+    </form>
+  </div>
+</section>
+
+<div class="shell" id="shell" hidden>
+  <aside class="rail" id="rail" aria-label="Primary">
+    <a class="brand" href="#/overview" aria-label="ShrotiHost Licensing — overview">
+      <span class="logo" aria-hidden="true" style="height:24px"></span>
+      <span class="brand-sub">Licensing control</span>
+    </a>
+    <nav class="navgroup" aria-label="Monitor">
+      <span class="navgroup-label" aria-hidden="true">Monitor</span>
+      <a class="nav" href="#/overview" data-route="overview"><svg class="i"><use href="#i-overview"/></svg>Overview<span class="kbd">G O</span></a>
+      <a class="nav" href="#/installations" data-route="installations"><svg class="i"><use href="#i-install"/></svg>Installations<span class="kbd">G I</span></a>
+      <a class="nav" href="#/security" data-route="security"><svg class="i"><use href="#i-shield"/></svg>Security<span class="kbd">G S</span></a>
+    </nav>
+    <nav class="navgroup" aria-label="Manage">
+      <span class="navgroup-label" aria-hidden="true">Manage</span>
+      <a class="nav" href="#/licences" data-route="licences"><svg class="i"><use href="#i-licence"/></svg>Licences<span class="kbd">G L</span></a>
+      <a class="nav" href="#/products" data-route="products"><svg class="i"><use href="#i-cube"/></svg>Products &amp; Plans<span class="kbd">G P</span></a>
+      <a class="nav" href="#/releases" data-route="releases"><svg class="i"><use href="#i-release"/></svg>Releases<span class="kbd">G R</span></a>
+    </nav>
+    <nav class="navgroup" aria-label="Configure">
+      <span class="navgroup-label" aria-hidden="true">Configure</span>
+      <a class="nav" href="#/keys" data-route="keys"><svg class="i"><use href="#i-key"/></svg>Signing Keys<span class="kbd">G K</span></a>
+      <a class="nav" href="#/access" data-route="access"><svg class="i"><use href="#i-lock"/></svg>Access<span class="kbd">G A</span></a>
+      <a class="nav" href="#/settings" data-route="settings"><svg class="i"><use href="#i-settings"/></svg>Settings<span class="kbd">G ,</span></a>
+    </nav>
+    <div class="rail-foot">
+      <div class="node" aria-label="Control plane node">
+        <b>SYS://LICENSING</b><br>region <span id="region-label">fra1</span> · signer <b id="signer-label">—</b><br>synced <span id="snap-label">—</span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar" role="banner">
+      <button class="btn icon ghost menu-btn" id="menu-btn" aria-label="Open navigation" aria-controls="rail" aria-expanded="false"><svg class="i"><use href="#i-menu"/></svg></button>
+      <div class="crumbs" aria-label="Location"><span class="dom">licensing.shrotihost.in</span><span class="sep" aria-hidden="true">/</span><b id="crumb">Overview</b></div>
+      <a class="mobile-brand" href="#/overview" aria-label="ShrotiHost Licensing">
+        <span class="logo" aria-hidden="true" style="height:20px"></span>
+      </a>
+      <button class="search" id="search-btn" aria-label="Search licences, installations, products and actions" aria-keyshortcuts="Control+K Meta+K"><svg class="i"><use href="#i-search"/></svg><span class="lbl">Search licences, domains, keys…</span><span class="kbd">⌘K</span></button>
+      <button class="btn icon ghost search-btn-sm" id="search-btn-sm" aria-label="Search"><svg class="i"><use href="#i-search"/></svg></button>
+      <a class="sysstat" id="sysstat" href="#/overview?focus=health"></a>
+      <div class="seg theme-seg" role="group" aria-label="Theme">
+        <button type="button" data-theme-set="dark" aria-pressed="false" title="Dark"><svg class="i"><use href="#i-moon"/></svg><span class="sr-only">Dark</span></button>
+        <button type="button" data-theme-set="light" aria-pressed="false" title="Light"><svg class="i"><use href="#i-sun"/></svg><span class="sr-only">Light</span></button>
+        <button type="button" data-theme-set="system" aria-pressed="false" title="System"><svg class="i"><use href="#i-monitor"/></svg><span class="sr-only">System</span></button>
+      </div>
+      <button class="user" id="user-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="user-menu"><span class="avatar" aria-hidden="true" id="user-initials"></span><span class="user-name" id="user-name"></span></button>
+      <div class="menu" id="user-menu" role="menu" hidden>
+        <div class="menu-label" id="menu-who">Signed in</div>
+        <a role="menuitem" href="#/settings?profile=1"><svg class="i"><use href="#i-lock"/></svg>Profile &amp; password</a>
+        <a role="menuitem" href="#/settings"><svg class="i"><use href="#i-settings"/></svg>Settings</a>
+        <button role="menuitem" type="button" data-action="shortcuts"><svg class="i"><use href="#i-kbd"/></svg>Keyboard shortcuts<span class="kbd" style="margin-left:auto">?</span></button>
+        <hr>
+        <div class="menu-label">Theme</div>
+        <button role="menuitemradio" type="button" data-theme-set="dark" aria-checked="false"><svg class="i"><use href="#i-moon"/></svg>Dark</button>
+        <button role="menuitemradio" type="button" data-theme-set="light" aria-checked="false"><svg class="i"><use href="#i-sun"/></svg>Light</button>
+        <button role="menuitemradio" type="button" data-theme-set="system" aria-checked="false"><svg class="i"><use href="#i-monitor"/></svg>System</button>
+        <hr>
+        <button role="menuitem" type="button" data-action="logout"><svg class="i"><use href="#i-logout"/></svg>Sign out</button>
+      </div>
+    </header>
+
+    <main class="content" id="main" tabindex="-1"></main>
+  </div>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" hidden></aside>
+<div class="scrim" id="dialog-scrim" hidden style="z-index:70"></div>
+<div class="dialog" id="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialog-title" hidden></div>
+<div class="scrim" id="pal-scrim" hidden style="z-index:80"></div>
+<div class="palette hud" id="palette" role="dialog" aria-modal="true" aria-label="Command palette" hidden>
+  <div class="pal-input"><svg class="i muted"><use href="#i-search"/></svg>
+    <label for="pal-q" class="sr-only">Search</label>
+    <input id="pal-q" role="combobox" aria-expanded="true" aria-controls="pal-list" aria-autocomplete="list" autocomplete="off" spellcheck="false" placeholder="Licence ID, domain, customer, IP, product, version, key ID…">
+    <span class="kbd">Esc</span>
+  </div>
+  <div class="pal-list" id="pal-list" role="listbox" aria-label="Results"></div>
+  <div class="pal-foot"><span><span class="kbd">↑</span> <span class="kbd">↓</span> navigate</span><span><span class="kbd">Enter</span> open</span><span><span class="kbd">Esc</span> close</span></div>
+</div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<div class="sr-only" id="announcer" aria-live="assertive"></div>
+
+<script>
+{{JS}}
+</script>
+</body>
+</html>

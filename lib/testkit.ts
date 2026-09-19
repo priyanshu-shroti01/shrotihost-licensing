@@ -15,7 +15,7 @@ let shared: PGlite | null = null;
 export async function freshDb(): Promise<PGlite> {
   if (shared) {
     await shared.exec(
-      "TRUNCATE events, request_nonces, download_tokens, releases, blacklist, entitlement_tokens, activations, licenses, products RESTART IDENTITY CASCADE",
+      "TRUNCATE events, request_nonces, download_tokens, releases, blacklist, entitlement_tokens, activations, licenses, products, operators, login_attempts RESTART IDENTITY CASCADE",
     );
     resetRateLimits();
     return shared;
@@ -41,4 +41,5 @@ export function setupEnv(): void {
   process.env.SERVER_SECRET = "test-server-secret-0123456789abcdef0123456789";
   process.env.ADMIN_API_KEY = "shl_ak_test";
   process.env.ADMIN_API_SECRET = "admin-secret-for-tests";
+  process.env.SESSION_SECRET = "session-secret-for-tests-0123456789abcdef";
 }

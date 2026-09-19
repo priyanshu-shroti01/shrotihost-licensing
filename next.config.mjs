@@ -5,18 +5,24 @@
 const csp = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline'",
-  "style-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data:",
   "connect-src 'self'",
   "frame-ancestors 'none'",
   "base-uri 'none'",
-  "form-action 'none'",
+  "form-action 'self'",
 ].join("; ");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // The operator console is a static page (public/console/index.html) that
+  // reads everything through the session-authenticated /api/console/* routes.
+  async rewrites() {
+    return [{ source: "/console", destination: "/console/index.html" }];
+  },
   async headers() {
     return [{
       source: "/:path*",

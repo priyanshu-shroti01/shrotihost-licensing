@@ -17,7 +17,7 @@ export default function Home() {
       </p>
       <span className={styles.status}><span className={styles.dot} aria-hidden="true" />Operational</span>
       <p className={styles.foot}>
-        Manage your licences in the <a href="https://portal.shrotihost.in/clientarea.php">ShrotiHost client area</a>.
+        Manage your licences in the <a href="https://portal.shrotihost.in/clientarea.php">ShrotiHost client area</a>. Operators: <a href="/console">sign in to the console</a>.
       </p>
     </main>
   );

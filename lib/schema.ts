@@ -176,4 +176,30 @@ CREATE TABLE IF NOT EXISTS events (
 CREATE INDEX IF NOT EXISTS events_created_idx ON events (created_at DESC);
 CREATE INDEX IF NOT EXISTS events_license_idx ON events (license_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS events_kind_idx ON events (kind, created_at DESC);
+
+-- ── Operators (console sign-in) ─────────────────────────────────────────────
+-- Passwords are scrypt hashes with a per-user salt. session_version is bumped
+-- on password/email change and sign-out-everywhere, which invalidates every
+-- session cookie minted before it.
+CREATE TABLE IF NOT EXISTS operators (
+  id                        INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  email                     TEXT NOT NULL UNIQUE,
+  name                      TEXT NOT NULL DEFAULT '',
+  role                      TEXT NOT NULL DEFAULT 'owner' CHECK (role IN ('owner','operator','viewer')),
+  password_hash             TEXT NOT NULL,
+  must_change_password      BOOLEAN NOT NULL DEFAULT true,
+  session_version           INTEGER NOT NULL DEFAULT 1,
+  last_login_at             TIMESTAMPTZ,
+  last_login_ip             TEXT,
+  created_at                TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at                TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- Failed sign-in throttle, shared across serverless instances.
+CREATE TABLE IF NOT EXISTS login_attempts (
+  client_key                TEXT PRIMARY KEY,
+  attempts                  INTEGER NOT NULL DEFAULT 0,
+  first_at                  TIMESTAMPTZ NOT NULL DEFAULT now(),
+  blocked_until             TIMESTAMPTZ
+);
 `;
