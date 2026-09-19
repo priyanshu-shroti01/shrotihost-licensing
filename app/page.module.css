@@ -1,0 +1,25 @@
+.card {
+  width: 100%;
+  max-width: 520px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 28px;
+}
+.logo { display: block; height: 36px; width: auto; }
+.logoDark { display: none; }
+@media (prefers-color-scheme: dark) {
+  .logoLight { display: none; }
+  .logoDark { display: block; }
+}
+.title { font-size: 1.35rem; margin: 24px 0 6px; }
+.lede { color: var(--text-2); margin: 0 0 20px; }
+.status {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--ok-bg); color: var(--ok);
+  border-radius: 999px; padding: 6px 12px; font-size: .9rem; font-weight: 600;
+}
+.dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.foot { color: var(--text-2); font-size: .85rem; margin: 20px 0 0; }
+.foot a { color: var(--brand); }
+@media (prefers-color-scheme: dark) { .foot a { color: #d77be9; } }

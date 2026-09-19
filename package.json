@@ -1,0 +1,38 @@
+{
+  "name": "shrotihost-licensing",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "ShrotiHost Licensing Server — issues Ed25519-signed entitlements for ShrotiHost WHMCS modules",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import ./test/loader.mjs --test --experimental-strip-types lib/*.test.ts",
+    "pretest": "node scripts/sync-schema.mjs",
+    "prebuild": "node scripts/sync-schema.mjs",
+    "sync:schema": "node scripts/sync-schema.mjs",
+    "db:migrate": "node scripts/migrate.mjs",
+    "keygen": "node scripts/keygen.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.5",
+    "postgres": "3.4.5",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.3.0",
+    "@types/node": "22.10.2",
+    "@types/react": "19.1.1",
+    "@types/react-dom": "19.1.1",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "16.3.5",
+    "typescript": "5.7.3"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
