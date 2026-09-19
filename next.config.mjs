@@ -18,10 +18,14 @@ const csp = [
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  // The operator console is a static page (public/console/index.html) that
-  // reads everything through the session-authenticated /api/console/* routes.
+  // The operator console is the site's home page: a static file
+  // (public/console/index.html) that reads everything through the
+  // session-authenticated /api/console/* routes.
   async rewrites() {
-    return [{ source: "/console", destination: "/console/index.html" }];
+    return { beforeFiles: [{ source: "/", destination: "/console/index.html" }] };
+  },
+  async redirects() {
+    return [{ source: "/console", destination: "/", permanent: false }];
   },
   async headers() {
     return [{
